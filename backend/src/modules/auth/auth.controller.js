@@ -1,5 +1,8 @@
-import User from "../../../DB/models/userModel.js";
 import jwt from "jsonwebtoken";
+
+import User from "../../../DB/models/userModel.js";
+import AppError from "../../utils/appError.js";
+import catchAsync from "../../utils/catchasync.js";
 
 const signToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -34,23 +37,20 @@ const createSendToken = (user, statusCode, res) => {
     });
 };
 
-export const login = async (req, res, next) => {
-    try {
-        const { email, password } = req.body;
-
-        const user = await User.findOne({ email }).select("+password");
-
-        if (!user || !(await user.correctPassword(password, user.password))) {
-            return next(new AppError("Incorrect email or password", 401));
-        }
-
-        const token = signToken(user._id);
-
-        createSendToken(user, 200, res);
-    } catch (err) {
-        res.status(400).json({
-            status: "fail",
-            message: err.message,
-        });
+export const login = catchAsync(async (req, res, next) => {
+    if (!req.body.email || !req.body.password) {
+        return next(new AppError("Please provide email and password", 400));
     }
-};
+
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email }).select("+password");
+
+    if (!user || !(await user.correctPassword(password, user.password))) {
+        return next(new AppError("Incorrect email or password", 401));
+    }
+
+    const token = signToken(user._id);
+
+    createSendToken(user, 200, res);
+});
