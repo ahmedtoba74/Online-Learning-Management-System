@@ -27,7 +27,7 @@
       --card-bg: #0b1620;
       --muted: #9aa6b0;
       --page-bg: #06101a;
-      --text-color: #e9eef2;
+      --text-color: #f1f1f1;
       --border-color: #212d3a;
       --gradient-bg: linear-gradient(135deg, #f3c84a 0%, #d4a017 100%);
     }
@@ -72,6 +72,11 @@
     .nav-link.btn { color: #0b1220 !important; }
     .nav-link.btn:hover::after { width: 0; }
 
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: clamp(0.8rem, 2vw, 1rem);
+    }
     .navbar-actions .btn {
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -95,12 +100,73 @@
       margin-right: 8px; 
     }
 
+    .language-toggle {
+      display: flex;
+      align-items: center;
+      gap: clamp(4px, 1vw, 6px);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      border-radius: clamp(14px, 2vw, 16px);
+      padding: clamp(3px, 0.5vw, 4px);
+      backdrop-filter: blur(4px);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.15);
+      user-select: none;
+      width: fit-content;
+      min-width: clamp(60px, 15vw, 80px);
+    }
+    .dark-mode .language-toggle {
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+    .language-toggle button {
+      width: clamp(30px, 7vw, 38px);
+      height: clamp(22px, 5vw, 26px);
+      background: transparent;
+      border: none;
+      border-radius: clamp(10px, 1.5vw, 12px);
+      font-size: clamp(0.75rem, 2vw, 0.85rem);
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+      touch-action: manipulation;
+      min-width: 30px;
+    }
+    .language-toggle button.active {
+      background: var(--gradient-bg);
+      color: var(--primary-dark);
+      transform: scale(1.03);
+    }
+    .language-toggle button:hover {
+      background: var(--accent);
+      color: var(--primary-dark);
+      transform: scale(1.03);
+    }
+    .language-toggle button:active {
+      transform: scale(0.97);
+    }
+    .dark-mode .language-toggle button {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .dark-mode .language-toggle button.active {
+      color: var(--primary-dark);
+    }
+    .dark-mode .language-toggle button:hover {
+      color: var(--primary-dark);
+    }
+
     .carousel-item {
-      height: 85vh;
-      min-height: 450px;
+      height: 90vh;
+      min-height: 500px;
       background-size: cover;
       background-position: center;
       position: relative;
+      transform: scale(1.1);
+      overflow: hidden;
       transition: opacity 1s ease-in-out;
     }
     .carousel-caption {
@@ -144,33 +210,37 @@
       margin: 0 auto 3rem auto; 
     }
 
-    #about { background-color: var(--card-bg); }
+    #about { 
+      background: linear-gradient(135deg, var(--page-bg) 60%, rgba(249, 211, 66, 0.1) 100%);
+    }
     #features { background-color: var(--page-bg); }
     #departments { background-color: var(--card-bg); }
     #faq { background-color: var(--page-bg); }
 
     #about .about-content {
       position: relative;
-      padding: 2.5rem;
-      border-radius: 16px;
+      padding: 2rem;
+      border-radius: 20px;
       background: var(--card-bg);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       transition: transform .3s, box-shadow .3s;
-      border-left: 4px solid var(--accent);
+      border: 2px solid var(--border-color);
+      max-width: 1100px;
+      margin: 0 auto;
     }
     #about .about-content:hover { 
-      transform: translateY(-8px); 
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12); 
+      transform: translateY(-10px); 
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); 
     }
     #about .about-title {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       font-weight: 700;
-      color: var(--primary-dark);
       background: var(--gradient-bg);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
     }
     .dark-mode #about .about-title { 
       background: linear-gradient(to right, var(--accent), #ffffff); 
@@ -178,53 +248,75 @@
       background-clip: text; 
     }
     #about .about-desc {
-      font-size: 1.1rem;
-      line-height: 1.8;
+      font-size: 1.15rem;
+      line-height: 1.7;
       color: var(--muted);
-      margin-bottom: 1.8rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     #about .about-points {
-      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
       padding: 0;
-      margin: 1.5rem 0;
+      margin: 2rem 0;
     }
     #about .about-points li {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-color);
-      margin-bottom: 1rem;
-      padding: 0.5rem 0;
-      transition: background .2s;
+      text-align: center;
+      padding: 2rem;
+      background: rgba(249, 211, 66, 0.1);
+      border-radius: 12px;
+      transition: background .3s, transform .3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .dark-mode #about .about-points li {
+      background: rgba(249, 211, 66, 0.3);
     }
     #about .about-points li:hover {
-      background: rgba(249, 211, 66, 0.1);
-      border-radius: 8px;
+      background: rgba(249, 211, 66, 0.25);
+      transform: translateY(-5px);
+    }
+    .dark-mode #about .about-points li:hover {
+      background: rgba(249, 211, 66, 0.4);
     }
     #about .about-points svg {
-      width: 22px;
-      height: 22px;
+      width: 40px;
+      height: 40px;
       color: var(--accent);
-      flex-shrink: 0;
+      margin-bottom: 1rem;
+    }
+    .dark-mode #about .about-points svg {
+      color: #ffd700;
+    }
+    #about .about-points span {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-color);
     }
     #about .btn-primary {
+      display: block;
+      margin: 2rem auto 0;
       background: var(--gradient-bg);
       border: none;
-      padding: 0.8rem 2rem;
+      padding: 0.9rem 2.5rem;
       font-weight: 600;
-      font-size: 1rem;
+      font-size: 1.1rem;
       border-radius: 50px;
       transition: transform .3s, box-shadow .3s;
     }
     #about .btn-primary:hover {
-      transform: scale(1.06);
-      box-shadow: 0 6px 18px rgba(249, 211, 66, 0.3);
+      transform: scale(1.08);
+      box-shadow: 0 8px 20px rgba(249, 211, 66, 0.35);
     }
-    [dir="rtl"] #about .about-content { border-left: none; border-right: 4px solid var(--accent); }
+    [dir="rtl"] #about .about-content { border-right: 2px solid var(--border-color); border-left: none; }
     [dir="rtl"] #about .about-points { padding-right: 0; }
-    [dir="rtl"] #about .about-points svg { margin-left: 1rem; margin-right: 0; }
+    [dir="rtl"] #about .about-points svg { margin-left: 0; margin-right: 0; }
 
     .feature-box {
       text-align: center;
@@ -305,9 +397,31 @@
     [dir="rtl"] .carousel-caption { text-align: right; }
     [dir="ltr"] .carousel-caption { text-align: left; }
     [dir="rtl"] .navbar-actions .btn svg { margin-right: 0; margin-left: 8px; }
+    [dir="rtl"] .language-toggle { flex-direction: row-reverse; }
 
     @media (max-width: 991px) {
-      .navbar-actions { margin-top: 1rem; width: 100%; display: flex; justify-content: space-around; }
+      .navbar-actions { 
+        margin-top: 1rem; 
+        width: 100%; 
+        display: flex; 
+        justify-content: space-around; 
+        align-items: center;
+        gap: clamp(0.6rem, 1.5vw, 0.8rem);
+      }
+      .language-toggle { 
+        gap: clamp(3px, 0.8vw, 5px); 
+        padding: clamp(2px, 0.4vw, 3px); 
+        min-width: clamp(55px, 14vw, 70px);
+      }
+      .language-toggle button { 
+        width: clamp(28px, 6.5vw, 34px); 
+        height: clamp(20px, 4.5vw, 24px); 
+        font-size: clamp(0.7rem, 1.8vw, 0.8rem);
+      }
+      .carousel-item {
+        height: 80vh;
+        min-height: 400px;
+      }
     }
     @media (max-width: 768px) {
       .carousel-caption h1 { font-size: 1.8rem; }
@@ -315,8 +429,65 @@
       .section-title { font-size: 2.2rem; }
       .department-item, .department-item:nth-child(even) { flex-direction: column; text-align: center; gap: 1.5rem; }
       [dir="rtl"] .department-item, [dir="rtl"] .department-item:nth-child(even) { text-align: center; }
-      #about .about-content { padding: 2rem; }
-      #about .about-title { font-size: 2rem; }
+      #about .about-content { padding: 1.5rem; }
+      #about .about-title { font-size: 2.2rem; }
+      #about .about-points { 
+        grid-template-columns: 1fr; 
+        gap: 1rem;
+      }
+      #about .about-points li { padding: 1rem; }
+      #about .about-points svg { width: 32px; height: 32px; }
+      .navbar-actions { 
+        gap: clamp(0.4rem, 1.2vw, 0.6rem);
+      }
+      .language-toggle { 
+        gap: clamp(2px, 0.6vw, 4px); 
+        padding: clamp(2px, 0.3vw, 3px); 
+        min-width: clamp(50px, 13vw, 65px);
+      }
+      .language-toggle button { 
+        width: clamp(26px, 6vw, 32px); 
+        height: clamp(18px, 4vw, 22px); 
+        font-size: clamp(0.65rem, 1.6vw, 0.75rem);
+      }
+      .carousel-item {
+        height: 70vh;
+        min-height: 350px;
+      }
+    }
+    @media (max-width: 576px) {
+      .navbar-actions { 
+        gap: clamp(0.3rem, 1vw, 0.5rem);
+      }
+      .language-toggle { 
+        gap: clamp(2px, 0.5vw, 3px); 
+        padding: clamp(1px, 0.2vw, 2px); 
+        min-width: clamp(45px, 12vw, 60px);
+      }
+      .language-toggle button { 
+        width: clamp(24px, 5.5vw, 30px); 
+        height: clamp(16px, 3.5vw, 20px); 
+        font-size: clamp(0.6rem, 1.5vw, 0.7rem);
+      }
+      #about .about-title { font-size: 1.8rem; }
+      #about .about-desc { font-size: 1rem; }
+      .carousel-item {
+        height: 60vh;
+        min-height: 300px;
+      }
+    }
+    @media (max-width: 400px) {
+      .navbar-actions { 
+        gap: clamp(0.2rem, 0.8vw, 0.4rem);
+      }
+      .language-toggle { 
+        min-width: clamp(40px, 11vw, 55px);
+      }
+      .language-toggle button { 
+        width: clamp(22px, 5vw, 28px); 
+        height: clamp(14px, 3vw, 18px); 
+        font-size: clamp(0.55rem, 1.4vw, 0.65rem);
+      }
     }
   </style>
 </head>
@@ -343,18 +514,12 @@
         </ul>
 
         <div class="d-flex align-items-center navbar-actions">
-          <div class="btn-group me-2" role="group">
-            <button class="btn btn-sm" id="enBtn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-              EN
-            </button>
-            <button class="btn btn-sm" id="arBtn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-              AR
-            </button>
+          <div class="language-toggle" id="languageToggle">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="ar">AR</button>
           </div>
 
-          <button id="darkToggle" class="btn btn-sm me-2" title="Toggle Dark Mode">
+          <button id="darkToggle" class="btn btn-sm" title="Toggle Dark Mode">
             <span id="darkIconContainer">
               <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
               <svg id="sunIcon" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
@@ -368,7 +533,7 @@
     </div>
   </nav>
 
-  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
     <div class="carousel-inner">
       <div class="carousel-item active" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=80')">
         <div class="container">
@@ -388,15 +553,6 @@
           </div>
         </div>
       </div>
-
-      <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1600&q=80')">
-        <div class="container">
-          <div class="carousel-caption" data-aos="fade-up">
-            <h1 id="hero_title_3" data-i18n="hero_h1_3">Connect With Professors & Peers</h1>
-            <p id="hero_p_3" data-i18n="hero_p_3">Engage in forums, collaborate on projects, and get feedback quickly.</p>
-          </div>
-        </div>
-      </div>
     </div>
 
     <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
@@ -411,27 +567,29 @@
 
   <section id="about">
     <div class="container" data-aos="fade-up">
-      <div class="about-content" data-aos="fade-up" data-aos-delay="100">
-        <h2 id="about_title" data-i18n="about_title" class="about-title">Discover BSNU LMS</h2>
-        <p id="about_desc" data-i18n="about_desc" class="about-desc">
-          BSNU LMS is a dynamic platform transforming university education. Access courses effortlessly, engage in interactive discussions, and track your academic progress with real-time insights, all crafted to elevate your learning experience.
+      <div class="text-center mb-5">
+        <h2 id="about_title" data-i18n="about_title" class="section-title">Discover BSNU LMS</h2>
+        <p id="about_desc" data-i18n="about_desc" class="section-subtitle">
+          A cutting-edge platform revolutionizing university education with seamless course access, interactive tools, and real-time progress tracking.
         </p>
+      </div>
+      <div class="about-content" data-aos="fade-up" data-aos-delay="100">
         <ul class="about-points">
-          <li data-i18n="about_point_1">
+          <li data-i18n="about_point_1" data-aos="fade-up" data-aos-delay="150">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            Seamless access to course materials anytime, anywhere.
+            <span>Access course materials anytime, anywhere.</span>
           </li>
-          <li data-i18n="about_point_2">
+          <li data-i18n="about_point_2" data-aos="fade-up" data-aos-delay="200">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            Interactive tools to foster collaboration and engagement.
+            <span>Engage with interactive collaboration tools.</span>
           </li>
-          <li data-i18n="about_point_3">
+          <li data-i18n="about_point_3" data-aos="fade-up" data-aos-delay="250">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            Real-time analytics to monitor and boost your progress.
+            <span>Track progress with real-time analytics.</span>
           </li>
-          <li data-i18n="about_point_4">
+          <li data-i18n="about_point_4" data-aos="fade-up" data-aos-delay="300">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-            Tailored learning paths to match your academic goals.
+            <span>Personalized learning paths for your goals.</span>
           </li>
         </ul>
         <a href="#features" class="btn btn-primary" id="learnMore" data-i18n="btn_learn_more">Explore Now</a>
@@ -599,14 +757,12 @@
         cta_explore: "Explore Departments",
         hero_h1_2: "Flexible Learning For Modern Students",
         hero_p_2: "Recorded lectures, live discussions, assignments and progress tracking.",
-        hero_h1_3: "Connect With Professors & Peers",
-        hero_p_3: "Engage in forums, collaborate on projects, and get feedback quickly.",
         about_title: "Discover BSNU LMS",
-        about_desc: "BSNU LMS is a dynamic platform transforming university education. Access courses effortlessly, engage in interactive discussions, and track your academic progress with real-time insights, all crafted to elevate your learning experience.",
-        about_point_1: "Seamless access to course materials anytime, anywhere.",
-        about_point_2: "Interactive tools to foster collaboration and engagement.",
-        about_point_3: "Real-time analytics to monitor and boost your progress.",
-        about_point_4: "Tailored learning paths to match your academic goals.",
+        about_desc: "A cutting-edge platform revolutionizing university education with seamless course access, interactive tools, and real-time progress tracking.",
+        about_point_1: "Access course materials anytime, anywhere.",
+        about_point_2: "Engage with interactive collaboration tools.",
+        about_point_3: "Track progress with real-time analytics.",
+        about_point_4: "Personalized learning paths for your goals.",
         btn_learn_more: "Explore Now",
         features_title: "Key Features",
         features_subtitle: "Everything you need for a seamless digital learning experience, all in one place.",
@@ -653,14 +809,12 @@
         cta_explore: "استكشف الأقسام",
         hero_h1_2: "تعلم مرن لطلاب العصر الحديث",
         hero_p_2: "محاضرات مسجلة، نقاشات مباشرة، تسليم الواجبات وتتبع الأداء.",
-        hero_h1_3: "تواصل مع دكاترتك وزملائك",
-        hero_p_3: "شارك في المنتديات، واشتغل على مشاريع جماعية واحصل على ملاحظات سريعة.",
         about_title: "اكتشف نظام BSNU",
-        about_desc: "نظام BSNU هو منصة ديناميكية تحول التعليم الجامعي. يمكنك الوصول إلى المقررات بسهولة، والمشاركة في نقاشات تفاعلية، وتتبع تقدمك الأكاديمي مع رؤى فورية، كل ذلك مصمم لرفع مستوى تجربتك التعليمية.",
-        about_point_1: "الوصول السلس إلى المواد الدراسية في أي وقت ومن أي مكان.",
-        about_point_2: "أدوات تفاعلية لتعزيز التعاون والمشاركة.",
-        about_point_3: "تحليلات فورية لمراقبة وتعزيز تقدمك.",
-        about_point_4: "مسارات تعليمية مخصصة تتناسب مع أهدافك الأكاديمية.",
+        about_desc: "منصة متطورة تُحدث ثورة في التعليم الجامعي مع الوصول السلس للمقررات، أدوات تفاعلية، وتتبع التقدم في الوقت الفعلي.",
+        about_point_1: "الوصول للمواد الدراسية في أي وقت ومن أي مكان.",
+        about_point_2: "التفاعل مع أدوات التعاون الديناميكية.",
+        about_point_3: "تتبع التقدم مع تحليلات فورية.",
+        about_point_4: "مسارات تعليمية مخصصة لأهدافك.",
         btn_learn_more: "استكشف الآن",
         features_title: "أهم المميزات",
         features_subtitle: "كل ما تحتاجه لتجربة تعليمية رقمية سلسة، كل ذلك في مكان واحد.",
@@ -701,26 +855,31 @@
     let darkOn = false;
 
     const darkToggle = document.getElementById('darkToggle');
-    const enBtn = document.getElementById('enBtn');
-    const arBtn = document.getElementById('arBtn');
+    const languageToggle = document.getElementById('languageToggle');
     const body = document.getElementById('body-root');
     const htmlRoot = document.getElementById('html-root');
 
     function applyLanguage(lang) {
+      if (currentLang === lang) return;
       currentLang = lang;
+
       if (lang === 'ar') {
         htmlRoot.setAttribute('dir', 'rtl');
         htmlRoot.setAttribute('lang', 'ar');
         body.classList.add('rtl');
-        arBtn.classList.add('active');
-        enBtn.classList.remove('active');
       } else {
         htmlRoot.setAttribute('dir', 'ltr');
         htmlRoot.setAttribute('lang', 'en');
         body.classList.remove('rtl');
-        enBtn.classList.add('active');
-        arBtn.classList.remove('active');
       }
+
+      const buttons = languageToggle.querySelectorAll('.lang-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-lang') === lang) {
+          btn.classList.add('active');
+        }
+      });
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
@@ -754,10 +913,17 @@
       updateDarkUI();
     });
 
-    enBtn.addEventListener('click', () => applyLanguage('en'));
-    arBtn.addEventListener('click', () => applyLanguage('ar'));
+    languageToggle.addEventListener('click', (e) => {
+      const target = e.target.closest('.lang-btn');
+      if (!target) return;
+      const lang = target.getAttribute('data-lang');
+      languageToggle.style.pointerEvents = 'none';
+      setTimeout(() => {
+        applyLanguage(lang);
+        languageToggle.style.pointerEvents = 'auto';
+      }, 150);
+    });
     
-    // Initial load
     applyLanguage('en');
   </script>
 </body>
