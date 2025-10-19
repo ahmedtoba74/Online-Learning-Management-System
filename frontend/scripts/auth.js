@@ -15,18 +15,28 @@ loginForm.addEventListener("submit", async (event) => {
     // Clear any previous error messages and hide the error box
     loginError.textContent = "";
     loginError.style.display = "none";
-    console.log(email, password);
+    
+    // Validate inputs
+    if (!email || !password) {
+        loginError.textContent = "Please enter both email and password";
+        loginError.style.display = "block";
+        return;
+    }
+    
+    console.log("Attempting to log in with:", { email, password });
+    
     try {
         // Use the imported function to make the API call
-        console.log("Attempting to log in with:", { email, password });
-        await loginUser(email, password);
-        console.log("Login successful");
+        const response = await loginUser(email, password);
+        console.log("Login successful:", response);
         alert("Login successful!");
-        console.log("Login successful!");
-
+        
         // If the login is successful and doesn't throw an error, redirect to the dashboard
         window.location.href = "./dashboard.html";
     } catch (error) {
-        document.getElementById("login-error").textContent = error.message;
+        console.error("Login error:", error);
+        alert("Login failed. Please try again.");
+        loginError.textContent = error.message || "Login failed. Please try again.";
+        loginError.style.display = "block";
     }
 });
