@@ -14,7 +14,7 @@ export const CourseSchema = new mongoose.Schema(
             type: Number,
             required: true,
         },
-        dura tion: {
+        duration: {
             type: Number,
             required: true,
         },

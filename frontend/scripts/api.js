@@ -40,6 +40,12 @@ export async function loginUser(email, password) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
     });
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+    }
+    console.log("Login response:", response);
+    return response.json();
 }
 
 // This function gets a list of courses from the backend
