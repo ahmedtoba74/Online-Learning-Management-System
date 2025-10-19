@@ -10,6 +10,7 @@ export async function loginUser(email, password) {
         const errorData = await response.json();
         throw new Error(errorData.message);
     }
+    console.log("Login response:", response);
     return response.json();
 }
 
